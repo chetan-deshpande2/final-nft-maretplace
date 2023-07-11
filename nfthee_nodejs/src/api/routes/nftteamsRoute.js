@@ -7,7 +7,7 @@ const {
 
 
 
-const { imageUpload } = require('../../../server');
+const { imageUpload } = require('../../..');
 const { nftIteams } = require('../../models');
 
 const router = express.Router();

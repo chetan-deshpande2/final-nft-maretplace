@@ -3,7 +3,7 @@ const {
   Multer: { upload, uploadS3 ,},
   IPFS: { uploadImageTest,uploadMultiples }
 } = require('../../utils');
-const { imageUpload } = require('../../../server');
+const { imageUpload } = require('../../..');
 
 const router = express.Router();
 
