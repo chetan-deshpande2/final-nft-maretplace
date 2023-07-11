@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFThee Support &middot; {{{title}}}</title>
+    <link rel="stylesheet" href="/css/plugins.min.css">
+    <link rel="stylesheet" href="/css/app.min.css">
+    <style type="text/css">
+        html {
+            overflow-x: hidden;
+            height: 100%;
+            font: 400 14px/20px "Roboto", Arial, sans-serif;
+        }
+        body {
+            background: #eee;
+            text-align: center;
+            font-family: "Roboto", Arial, sans-serif;
+            height: 100%;
+            -webkit-font-smoothing: subpixel-antialiased;
+        }
+
+        .wrapper,
+        #privacyPolicySlide {
+            width: 400px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50.111%);
+            -webkit-transform: translate(-50%, -50.111%);
+            padding: 15px 0;
+        }
+
+        #privacyPolicySlide {
+            width: 75%;
+            text-align: left;
+            height: auto;
+        }
+
+        .white-box {
+            height: 500px;
+            background: #f6f6f6;
+            border: 1px solid #ccc;
+            padding: 15px;
+            overflow: auto;
+            color: #222;
+        }
+
+        h2 {
+            color: #444;
+        }
+
+        p {
+            font-family: "Roboto", Arial, sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #272727;
+            text-rendering: auto;
+        }
+
+        img {
+            margin-bottom: 55px;
+        }
+
+        label {
+            text-align: left
+        }
+
+        button:not('.action') {
+            font-family: "Roboto", Arial, sans-serif;
+            width: 340px;
+            height: 20px;
+            text-align: left;
+            padding: 15px 20px;
+            background: #384b5f;
+            border: 1px solid #1c2937;
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            font-weight: 300;
+        }
+
+        button.button {
+            width: 380px;
+            height: auto;
+            text-align: center;
+            background: #e74b3b;
+            border: none;
+            text-transform: uppercase;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+        }
+
+        button.button:hover {
+            background: #f15849;
+            cursor: pointer;
+        }
+
+        *:focus {
+            outline: 0;
+        }
+
+        a {
+            display: inline-block;
+            padding-right: 10px;
+            color: #727272;
+            font-size: 14px;
+            float: right;
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        a:hover {
+            color: #A5A5A5;
+        }
+
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color:    #222;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #222;
+            opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #222;
+            opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color:    #222;
+        }
+
+        .alert-message p {
+            margin-top: 8px;
+            margin-bottom: 0;
+            color: white;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        button.button.noCap {
+            text-transform: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .green {
+            background: #29b955;
+        }
+
+        .md-input-bar:before,
+        .md-input-bar:after {
+            background: #2196f3 !important;
+        }
+
+        .btn {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 24px !important;
+            /*color: #E74C3C;*/
+        }
+
+        .btn:hover, .btn:active, .btn:focus {
+            /*color: #222;*/
+        }
+
+        #logosvg {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+        }
+
+        .l1 {
+            stroke-dasharray: 290;
+            stroke-dashoffset: 290;
+            animation: line 0.8s infinite ease-in-out;
+            -webkit-animation: line 0.8s infinite ease-in-out;
+        }
+
+        @keyframes line {
+            0% {
+                stroke-dashoffset: 290;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dashoffset: -290;
+            }
+        }
+        .loader {
+            height: 75px;
+            width: 100%;
+        }
+        .loader:before {
+            content: '';
+            padding-top: 50px !important;
+        }
+        .loader svg {
+            position: relative;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        .loader svg line {
+            stroke: #000;
+            stroke-width: 5;
+            stroke-linecap: round;
+        }
+    </style>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/truRequire.js"></script>
+</head>
+<body> 
+<div class="wrapper">
+    <div class="slides">
+        <div class="slide">
+            <h2 style="margin-bottom: 18px;">Create Account</h2>
+            <p style="text-align: left;">
+                This wizard will walk you through the process of creating an account to access trudesk.
+            </p>
+
+            <button class="btn md-btn md-btn-wave md-btn-success" data-next>Lets Get Started</button>
+        </div>
+
+        <div id="userInfoSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">User Information</h2>
+            <p style="text-align: left;">
+                Please fill out the information below. All fields are required.
+            </p>
+            <form id="userInfo" class="uk-form-stacked uk-clearfix">
+                <div class="uk-margin-medium-bottom">
+                    <label for="user-fullname">Full Name</label>
+                    <input id="user-fullname" name="user-fullname" class="md-input" type="text" required />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="user-email">Email</label>
+                    <input id="user-email" name="user-email" class="md-input" type="email" required />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="user-password">Password</label>
+                    <input id="user-password" name="user-password" class="md-input" type="password" required />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="user-cPassword">Confirm Password</label>
+                    <input id="user-cPassword" name="user-cPassword" class="md-input" type="password" required />
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <div id="captchaImage" style="margin-bottom: 10px;"></div>
+                    <label for="captcha">Please enter the letters you see above.</label>
+                    <input type="text" id="captcha" name="captcha" class="md-input" required />
+                </div>
+                <div style="width: 25%; float: left;">
+                    <button class="btn md-btn md-btn-wave md-btn-primary1" type="button" data-prev>Back</button>
+                </div>
+                <div style="width: 70%; float: right;">
+                    <button id="checkEmail" class="btn md-btn md-btn-wave md-btn-success" type="button">Next</button>
+                </div>
+            </form>
+
+            <a href="#" class="no-ajaxy" id="privacyPolicyBtn">Privacy Policy</a>
+        </div>
+        <div class="slide hide">
+            <h2 style="margin-bottom: 25px;">Creating Account...</h2>
+            <p style="text-align: center;">Please wait while we create your account.</p>
+            <div class="loader">
+                <svg style="width: 140px; " viewBox="0 0 288.9 70.1">
+                    <line class="l1" x1="0" y1="0" x2="288" y2="0"></line>
+                </svg>
+            </div>
+        </div>
+        <div id="errorSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Crap! Something funky happened.</h2>
+            <p style="text-align: justify;">
+                Something didn't work out the way it should. Please try again or submit a bug report below.
+            </p>
+            <pre style="text-align: left; font-size: 11px; font-weight: normal; margin-bottom: 15px;"></pre>
+            <div style="width: 100%;">
+                <a href="https://www.github.com/polonel/trudesk/issues/new" target="_blank" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave md-btn-danger" type="button" style="width: 100%; margin-bottom: 10px !important;">I think I should submit this issue.</button>
+                </a>
+                <button class="btn md-btn md-btn-wave md-btn-success" type="button" style="width: 100%; margin-bottom: 10px !important;" onclick="location.reload();">I think i will start over.</button>
+                <a href="https://github.com/polonel/trudesk/blob/master/README.md" target="_blank" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave" type="button" style="width: 100%; margin-bottom: 10px !important;">or maybe i should read the docs!</button>
+                </a>
+            </div>
+        </div>
+        <div id="emailExistsSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px;">Email Already Exists</h2>
+            <p style="text-align: justify;">
+                The email <span id="emailSpan" style="font-weight: bold;">email@email.com</span> already exists. If you already have an account using this email please login and submit your ticket.
+            </p>
+            <div style="width: 100%; margin-top: 50px;">
+                <a href="/login" class="no-ajaxy" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave md-btn-primary" type="button" style="width: 100%; margin-bottom: 10px !important;">Login</button>
+                </a>
+                <button class="btn md-btn md-btn-wave" type="button" style="width: 100%; margin-bottom: 10px !important;" data-prev>Back</button>
+            </div>
+        </div>
+        <div id="accountCreatedSlide" class="slide hide">
+            <h2 style="margin-bottom: 25px; text-align: left;">Thank you <span id="spanfullname" style="color: #2196f3;">[fullname]</span>,</h2>
+            <p style="text-align: justify;">
+                Your account has been created.
+            </p>
+            <p style="text-align: justify;">
+                Please click the button below in order to login with your email (<span id="spanemail" style="color: #2196f3">[EMAIL]</span>).
+            </p>
+            <div style="width: 100%; margin-top: 50px;">
+                <a href="/login" class="no-ajaxy" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave md-btn-primary" type="button" style="width: 100%; margin-bottom: 10px !important;">Login</button>
+                </a>
+            </div>
+        </div>
+        <div id="accountCreateError" class="hide">
+            <h2 style="margin-bottom: 25px; text-align: left;">An Error has occurred</h2>
+            <p style="text-align: justify;">
+                An Unknown Error has occurred
+            </p>
+            <div style="width: 100%; margin-top: 50px;">
+                <a href="/signup" class="no-ajaxy" style="width: 100%; padding: 0; margin: 0;">
+                    <button class="btn md-btn md-btn-wave md-btn-danger" type="button" style="width: 100%; margin-bottom: 10px !important;">Start Over</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="privacyPolicySlide" class="hide">
+    <div class="white-box" style="margin-bottom: 15px;">
+        {{{data.privacyPolicy}}}
+    </div>
+    <button id="privacyPolicyBackBtn" class="btn md-btn md-btn-wave md-btn-primary" type="button" style="width: 100%; margin-bottom: 10px !important;">Back</button>
+</div>
+
+
+<script type="text/javascript">
+    window.truRequire(['jquery', 'snackbar', 'helpers'], function(loadedModules) {
+        var $ = loadedModules[0];
+        window.Snackbar = loadedModules[1];
+        var helpers = loadedModules[2];
+
+        $(document).ready(function() {
+            helpers.init();
+            getCaptcha();
+            var $slides = $('.slides > .slide');
+            var totalSlides = 0;
+            var activeSlide = 0;
+            $slides.each(function(idx) {
+                $(this).addClass('slide-' + idx);
+                if (idx === 0)
+                    $(this).addClass('activeSlide');
+                else
+                    $(this).addClass('hide');
+
+                totalSlides++;
+            });
+
+
+            function isDoubleClicked(element) {
+                //if already clicked return TRUE to indicate this click is not allowed
+                if (element.data("isclicked")) return true;
+
+                //mark as clicked for 1 second
+                element.data("isclicked", true);
+                setTimeout(function () {
+                    element.removeData("isclicked");
+                }, 1000);
+
+                //return FALSE to indicate this click was allowed
+                return false;
+            }
+
+            $('button[data-next]').click(function() {
+                if (isDoubleClicked($(this))) return;
+                //return showTicketCreated();
+                advanceSlide();
+            });
+
+            $('button[data-prev]').click(function() {
+                if (isDoubleClicked($(this))) return;
+                var prevSlideIdx = activeSlide - 1;
+                var prevSlide = $('.slide-' + prevSlideIdx);
+                if (prevSlide.length > 0) {
+                    $(this).parents('.slide').fadeOut(300, function() {
+                        prevSlide.css({display: 'none'}).removeClass('hide');
+                        $(this).addClass('hide').removeClass('activeSlide');
+                        prevSlide.fadeIn(300, function() {
+                            prevSlide.addClass('activeSlide');
+                        });
+                    });
+
+                    activeSlide--;
+                }
+            });
+
+            var userInfo = undefined;
+            var ticket = undefined;
+
+            $('button#checkEmail').click(function() {
+                if (isDoubleClicked($(this))) return;
+                var userInfoFormData = $('form#userInfo').serializeObject();
+                var $emailField, $fullnameField, $passwordField, $confirmPasswordField;
+                var $emailValid = false, $fullnameValid = false, $passwordValid = false, $confirmPasswordValid = false;
+
+                if (!userInfoFormData['user-email'] || !validateEmail(userInfoFormData['user-email'])) {
+                    $emailField = $('form#userInfo').find('input#user-email');
+                    $emailField.parent('.md-input-wrapper').addClass('has-error');
+                    $emailField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $emailField.addClass('uk-form-danger');
+                } else {
+                    $emailField = $('form#userInfo').find('input#user-email');
+                    $emailField.parent('.md-input-wrapper').removeClass('has-error');
+                    $emailField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $emailField.removeClass('uk-form-danger');
+
+                    $emailValid = true;
+                }
+
+                if (!userInfoFormData['user-fullname'] || (userInfoFormData['user-fullname'].length < 5)) {
+                    $fullnameField = $('form#userInfo').find('input#user-fullname');
+                    $fullnameField.parent('.md-input-wrapper').addClass('has-error');
+                    $fullnameField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $fullnameField.addClass('uk-form-danger');
+                } else {
+                    $fullnameField = $('form#userInfo').find('input#user-fullname');
+                    $fullnameField.parent('.md-input-wrapper').removeClass('has-error');
+                    $fullnameField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $fullnameField.removeClass('uk-form-danger');
+
+                    $fullnameValid = true;
+                }
+
+                if (!userInfoFormData['user-password'] || (userInfoFormData['user-password'].length < 5)) {
+                    $passwordField = $('form#userInfo').find('input#user-password');
+                    $passwordField.parent('.md-input-wrapper').addClass('has-error');
+                    $passwordField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $passwordField.addClass('uk-form-danger');
+                } else {
+                    $passwordField = $('form#userInfo').find('input#user-password');
+                    $passwordField.parent('.md-input-wrapper').removeClass('has-error');
+                    $passwordField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $passwordField.removeClass('uk-form-danger');
+
+                    $passwordValid = true;
+                }
+
+                if (!userInfoFormData['user-cPassword'] || (userInfoFormData['user-cPassword'].length < 5)) {
+                    $confirmPasswordField = $('form#userInfo').find('input#user-cPassword');
+                    $confirmPasswordField.parent('.md-input-wrapper').addClass('has-error');
+                    $confirmPasswordField.parent('.md-input-wrapper').find('.md-input-bar').addClass('bottom-fix error-color');
+                    $confirmPasswordField.addClass('uk-form-danger');
+                } else {
+                    $confirmPasswordField = $('form#userInfo').find('input#user-cPassword');
+                    $confirmPasswordField.parent('.md-input-wrapper').removeClass('has-error');
+                    $confirmPasswordField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                    $confirmPasswordField.removeClass('uk-form-danger');
+
+                    if ($passwordValid && ($passwordField.text().toString() === $confirmPasswordField.text().toString()))
+                        $confirmPasswordValid = true;
+                }
+
+                if (!$fullnameValid || !$emailValid || !$confirmPasswordValid)
+                    return false;
+
+                var $checkEmailBtn = $(this);
+                $checkEmailBtn.prop('disabled', true).text('Validating...');
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/v1/public/users/checkemail',
+                    data: {
+                        email: userInfoFormData['user-email'],
+                        captcha: $('#captcha').val()
+                    },
+                    error: function(e) {
+                        $checkEmailBtn.prop('disabled', false).text('Next');
+                        window.Snackbar.show({
+                            text: 'Invalid Captcha',
+                            actionTextColor: 'red'
+                        });
+
+                        console.error(e);
+                    },
+                    success: function(data) {
+                        $checkEmailBtn.prop('disabled', false).text('Next');
+                        if (!data.success) {
+                            $checkEmailBtn.prop('disabled', false).text('Next');
+                            window.Snackbar.show({
+                                text: 'An Error occurred.',
+                                actionTextColor: 'red'
+                            });
+                        } else {
+                            if (data.exist) {
+                                //Email already Exist
+                                //Show email exists slide
+                                var $active = $('.activeSlide');
+                                var errorSlide = $('#emailExistsSlide');
+                                if (errorSlide.length > 0) {
+                                    $('span#emailSpan').text(userInfoFormData['user-email']);
+                                    $active.fadeOut(300, function() {
+                                        errorSlide.css({display: 'none'}).removeClass('hide');
+                                        $(this).addClass('hide').removeClass('activeSlide');
+                                        errorSlide.fadeIn(300, function() {
+                                            errorSlide.addClass('activeSlide');
+                                        });
+                                    });
+                                    activeSlide++;
+                                }
+                            } else {
+                                userInfo = {
+                                    'fullname': userInfoFormData['user-fullname'],
+                                    'email': userInfoFormData['user-email'],
+                                    'password': userInfoFormData['user-cPassword']
+                                };
+
+                                //Reset Error Classes
+                                $emailField = $('form#userInfo').find('input#user-email');
+                                $emailField.parent('.md-input-wrapper').removeClass('has-error');
+                                $emailField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                                $emailField.removeClass('uk-form-danger');
+                                $fullnameField = $('form#userInfo').find('input#user-fullname');
+                                $fullnameField.parent('.md-input-wrapper').removeClass('has-error');
+                                $fullnameField.parent('.md-input-wrapper').find('.md-input-bar').removeClass('bottom-fix error-color');
+                                $fullnameField.removeClass('uk-form-danger');
+
+                                advanceSlide();
+
+                                setTimeout(function() {
+                                    createAccount();
+                                }, 1500);
+                            }
+                        }
+                    }
+                });
+            });
+
+            function advanceSlide() {
+                var $active = $('.activeSlide');
+                var nextSlideIdx = activeSlide + 1;
+                var nextSlide = $('.slide-' + nextSlideIdx);
+                if (nextSlide.length > 0) {
+                    $active.fadeOut(300, function() {
+                        $(this).addClass('hide').removeClass('activeSlide');
+                        nextSlide.css({display: 'none'}).removeClass('hide');
+                        nextSlide.fadeIn(300, function() {
+                            nextSlide.addClass('activeSlide');
+                        });
+                    });
+
+                    activeSlide++;
+                }
+            }
+
+            $('a#privacyPolicyBtn').click(function() {
+                if (isDoubleClicked($(this))) return;
+
+                showPrivacyPolicy();
+            });
+
+            $('button#privacyPolicyBackBtn').click(function() {
+                if (isDoubleClicked($(this))) return;
+
+                var privacyPolicySlide = $('#privacyPolicySlide');
+                if (privacyPolicySlide.length > 0) {
+                    privacyPolicySlide.fadeOut(300, function() {
+                        privacyPolicySlide.addClass('hide');
+
+                        var userInfoSlide = $('#userInfoSlide');
+                        userInfoSlide.removeClass('hide');
+                        userInfoSlide.fadeIn(300, function() {
+                            userInfoSlide.addClass('activeSlide');
+                        });
+                    });
+
+                    activeSlide = 1;
+                }
+            });
+
+            function getCaptcha() {
+                $.ajax({
+                   method: 'GET',
+                    url: '/captcha',
+                    success: function(response) {
+                       var svg = $(response).find('svg');
+                       $('#captchaImage').append(svg);
+                    },
+                    error: function(err) {
+                       console.error(err);
+                    }
+                });
+            }
+
+            function createAccount() {
+                var data = {
+                    user: userInfo,
+                    captcha: $('#captcha').val()
+                };
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/v1/public/account/create',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    error: function(response) {
+                        console.log(response)
+                        $('.activeSlide').removeClass('activeSlide').addClass('hide')
+                        var $errorSlide = $('#accountCreateError')
+                        $errorSlide.removeClass('hide')
+                        $errorSlide.find('p').html(response.responseJSON.error)
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            //TODO: Show Error Slide
+                            var $errorSlide = $('#accountCreateError')
+                            $errorSlide.removeClass('hide')
+                            $errorSlide.find('p').html('Error: ' + response.error)
+                        } else {
+                            $('span#spanfullname').text(userInfo.fullname);
+                            $('span#spanemail').text(userInfo.email);
+
+                            showAccountCreated();
+                        }
+                    },
+                })
+            }
+
+            function showAccountCreated() {
+                //Show Account Created Slide
+                var $active = $('.activeSlide');
+                var accountCreatedSlide = $('#accountCreatedSlide');
+                if (accountCreatedSlide.length > 0) {
+                    $active.fadeOut(300, function() {
+                        accountCreatedSlide.css({display: 'none'}).removeClass('hide');
+                        $(this).addClass('hide').removeClass('activeSlide');
+                        accountCreatedSlide.fadeIn(300, function() {
+                            accountCreatedSlide.addClass('activeSlide');
+                        });
+                    });
+                }
+            }
+
+            function showPrivacyPolicy() {
+                //Show Ticket Created Slide
+                var $active = $('.activeSlide');
+                var privacyPolicySlide = $('#privacyPolicySlide');
+                if (privacyPolicySlide.length > 0) {
+                    //$('span#emailSpan').text(userInfoFormData['user-email']);
+                    $active.fadeOut(300, function() {
+                        privacyPolicySlide.css({display: 'none'}).removeClass('hide');
+                        $(this).addClass('hide');
+                        privacyPolicySlide.fadeIn(300, function() {
+
+                        });
+                    });
+                }
+            }
+
+            function validateEmail(email) {
+                var mailFormat = /^\w+([.-]\w+)*@\w+([.-]\w+)*(\.\w+)+$/;
+                return email.match(mailFormat);
+            }
+
+            $.fn.serializeObject = function(){
+                var obj = {};
+
+                $.each( this.serializeArray(), function(i,o){
+                    var n = o.name,
+                            v = o.value;
+
+                    obj[n] = obj[n] === undefined ? v
+                            : $.isArray( obj[n] ) ? obj[n].concat( v )
+                            : [ obj[n], v ];
+                });
+
+                return obj;
+            };
+
+
+        });
+    });
+</script>
+</body>
+</html>
