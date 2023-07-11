@@ -8,6 +8,9 @@
     "start": "NODE_ENV=prod nodemon index.js.js -e js",
     "local": "NODE_ENV=local nodemon api.js -e js"
   },
+  "engines": {
+    "node": "=16.16.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://Yogesh_Chourasiyaa07@bitbucket.org/sorora_/nfthee_nodejs.git"
